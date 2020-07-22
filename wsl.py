@@ -17,8 +17,6 @@ class TestExamples(unittest.TestCase):
     """
 
     def setUp(self):
-        self.shell = ['bash'] if platform == 'win32' else []
-
         print('\n::group::Log')
         sys.stdout.flush()
 
@@ -27,7 +25,7 @@ class TestExamples(unittest.TestCase):
         sys.stdout.flush()
 
     def _sh(self, args):
-        check_call(self.shell + args, stderr=STDOUT)
+        check_call(args, stderr=STDOUT)
 
     def test_wsl_conflict(self):
         self._sh([str(Path(__file__).parent / 'wsl.sh')])
