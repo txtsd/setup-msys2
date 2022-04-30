@@ -1,0 +1,3 @@
+
+[clang32]
+Include = /etc/pacman.d/mirrorlist.mingw
