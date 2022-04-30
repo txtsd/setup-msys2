@@ -278,15 +278,15 @@ async function run() {
       core.startGroup('Disable CheckSpace...');
       // Reduce time required to install packages by disabling pacman's disk space checking
       await runMsys(['sed', '-i', 's/^CheckSpace/#CheckSpace/g', '/etc/pacman.conf']);
-      await runMsys(['sed', '-e', '$a[clang32]', '/etc/pacman.conf']);
-      await runMsys(['sed', '-e', '$aInclude = /etc/pacman.d/mirrorlist.mingw', '/etc/pacman.conf']);
+      await runMsys(['sed', '-i', '-e', '$ a[clang32]', '/etc/pacman.conf']);
+      await runMsys(['sed', '-i', '-e', '$ aInclude = /etc/pacman.d/mirrorlist.mingw', '/etc/pacman.conf']);
       changeGroup('Updating packages...');
       await pacman(['-Syuu', '--overwrite', '*'], {ignoreReturnCode: true});
       // We have changed /etc/pacman.conf above which means on a pacman upgrade
       // pacman.conf will be installed as pacman.conf.pacnew
       await runMsys(['mv', '-f', '/etc/pacman.conf.pacnew', '/etc/pacman.conf'], {ignoreReturnCode: true, silent: true});
-      await runMsys(['sed', '-e', '$a[clang32]', '/etc/pacman.conf']);
-      await runMsys(['sed', '-e', '$aInclude = /etc/pacman.d/mirrorlist.mingw', '/etc/pacman.conf']);
+      await runMsys(['sed', '-i', '-e', '$ a[clang32]', '/etc/pacman.conf']);
+      await runMsys(['sed', '-i', '-e', '$ aInclude = /etc/pacman.d/mirrorlist.mingw', '/etc/pacman.conf']);
       changeGroup('Killing remaining tasks...');
       await exec.exec('taskkill', ['/F', '/FI', 'MODULES eq msys-2.0.dll']);
       changeGroup('Final system upgrade...');
